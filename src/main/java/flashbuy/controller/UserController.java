@@ -10,14 +10,19 @@ import flashbuy.service.UserService;
 import flashbuy.service.model.UserModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
+import static flashbuy.util.Utils.convertModel2VO;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
 
     @Autowired
     UserInfoMapper userInfoMapper;
@@ -50,11 +55,4 @@ public class UserController {
         return CommonReturnType.create(userVO);
     }
 
-    private UserVO convertModel2VO(UserModel userModel, UserVO userVO) {
-        if (userModel == null) return null;
-
-        BeanUtils.copyProperties(userModel, userVO);
-
-        return userVO;
-    }
 }

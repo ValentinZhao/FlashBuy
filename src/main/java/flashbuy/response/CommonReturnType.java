@@ -9,7 +9,7 @@ public class CommonReturnType {
         return CommonReturnType.create(data, "success"); // 函数重载，没给status默认是成功
     }
 
-    private static CommonReturnType create(Object data, String status) {
+    public static CommonReturnType create(Object data, String status) {
         CommonReturnType type = new CommonReturnType();
 
         type.setData(data);

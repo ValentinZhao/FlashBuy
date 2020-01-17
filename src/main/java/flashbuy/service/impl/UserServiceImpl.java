@@ -26,6 +26,8 @@ public class UserServiceImpl implements UserService {
     public UserModel getUserById(int id) {
         UserInfo info = userInfoMapper.selectByPrimaryKey(id);
 
+        if (info == null) return null;
+
         // 我们需要改造user password mapper里面的方法，让它支持从user id来取对应的密码
         UserPassword psw = userPasswordMapper.selectByUserId(info.getId());
 

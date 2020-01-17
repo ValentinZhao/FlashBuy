@@ -1,11 +1,13 @@
 package flashbuy.error;
 
 public enum EmBusinessError implements CommonError {
-    // 00000开头代表通用错误
-    INVALID_PARAMETER(00001, "入参校验失败"),
+    // 10000开头代表通用错误
+    INVALID_PARAMETER(10001, "入参校验失败"),
 
-    // 10000开头代表用户错误
-    USER_NOT_EXIST(10001, "用户不存在")
+    UNKNOWN_PARAMETER(10002, "未知错误"),
+
+    // 20000开头代表用户错误
+    USER_NOT_EXIST(20001, "用户不存在")
     ;
 
     private int errCode;
