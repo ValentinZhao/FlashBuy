@@ -9,6 +9,8 @@ import flashbuy.error.BusinessException;
 import flashbuy.error.EmBusinessError;
 import flashbuy.service.UserService;
 import flashbuy.service.model.UserModel;
+import flashbuy.validator.ValidationResult;
+import flashbuy.validator.ValidatorImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserPasswordMapper userPasswordMapper;
+
+    @Autowired
+    private ValidatorImpl validator;
 
     /**
      * 这里面的话，需要注意由于我们要从密码表里面取密码，结合起来信息set给UserModel才可以进行
@@ -48,12 +53,17 @@ public class UserServiceImpl implements UserService {
         if (userModel == null)
             throw new BusinessException(EmBusinessError.INVALID_PARAMETER);
 
-        if (userModel.getGender() == null ||
-            userModel.getAge() == null ||
-            StringUtils.isEmpty(userModel.getPhone()) ||
-            StringUtils.isEmpty(userModel.getName()) ||
-            StringUtils.isEmpty(userModel.getEncrptPassword())
-        ) throw new BusinessException(EmBusinessError.INVALID_PARAMETER);
+        ValidationResult result =  validator.validate(userModel);
+        if (result.isHasErrors()) {
+            throw new BusinessException(EmBusinessError.INVALID_PARAMETER, result.getErrMsg());
+        }
+        // 省下下面这一堆东西，注意UserModel里面的对应注解，把错误信息直接给到result里面了
+//        if (userModel.getGender() == null ||
+//            userModel.getAge() == null ||
+//            StringUtils.isEmpty(userModel.getPhone()) ||
+//            StringUtils.isEmpty(userModel.getName()) ||
+//            StringUtils.isEmpty(userModel.getEncrptPassword())
+//        )
 
         UserInfo info = convertUM2Info(userModel);
         userInfoMapper.insertSelective(info);
