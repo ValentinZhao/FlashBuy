@@ -1,13 +1,18 @@
 package flashbuy.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import flashbuy.dao.UserInfoMapper;
 import flashbuy.dao.UserPasswordMapper;
 import flashbuy.dataobject.UserInfo;
 import flashbuy.dataobject.UserPassword;
+import flashbuy.error.BusinessException;
+import flashbuy.error.EmBusinessError;
 import flashbuy.service.UserService;
 import flashbuy.service.model.UserModel;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,6 +40,64 @@ public class UserServiceImpl implements UserService {
 
 
         return aggregate(info, psw);
+    }
+
+    @Override
+    @Transactional
+    public void register(UserModel userModel) throws BusinessException {
+        if (userModel == null)
+            throw new BusinessException(EmBusinessError.INVALID_PARAMETER);
+
+        if (userModel.getGender() == null ||
+            userModel.getAge() == null ||
+            StringUtils.isEmpty(userModel.getPhone()) ||
+            StringUtils.isEmpty(userModel.getName()) ||
+            StringUtils.isEmpty(userModel.getEncrptPassword())
+        ) throw new BusinessException(EmBusinessError.INVALID_PARAMETER);
+
+        UserInfo info = convertUM2Info(userModel);
+        userInfoMapper.insertSelective(info);
+
+        userModel.setId(info.getId()); // 存过之后才有自增的id
+
+        UserPassword psw = convertUM2Psw(userModel);
+
+        userPasswordMapper.insertSelective(psw);
+    }
+
+    @Override
+    public UserModel validateLogin(String phone, String psw) throws BusinessException {
+        UserInfo info = userInfoMapper.selectByPhoneNumber(phone);
+
+        if (info == null)
+            throw new BusinessException(EmBusinessError.LOGIN_FAILURE);
+
+        UserPassword password = userPasswordMapper.selectByUserId(info.getId());
+
+        if (!password.getEncrpPswd().equals(psw))
+            throw new BusinessException(EmBusinessError.LOGIN_FAILURE);
+
+        UserModel model = aggregate(info, password);
+
+        return model;
+    }
+
+    private UserPassword convertUM2Psw(UserModel userModel) {
+        UserPassword psw = new UserPassword();
+
+        psw.setEncrpPswd(userModel.getEncrptPassword());
+        psw.setUserId(userModel.getId());
+
+        return psw;
+
+    }
+
+    private UserInfo convertUM2Info(UserModel userModel) {
+        UserInfo info = new UserInfo();
+
+        BeanUtils.copyProperties(userModel, info);
+
+        return info;
     }
 
     private UserModel aggregate(UserInfo info, UserPassword psw) {
