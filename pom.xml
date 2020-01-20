@@ -135,7 +135,7 @@
             <!--允许移动生成好的文件-->
             <verbose>true</verbose>
             <!--允许覆盖，一般在企业中开发是不许覆盖的-->
-            <overwrite>true</overwrite>
+            <overwrite>false</overwrite>
             <!--这个很重要，mybatis配置文件的路径！-->
             <configurationFile>
               src/main/resources/mybatis-generator.xml

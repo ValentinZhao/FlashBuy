@@ -29,12 +29,18 @@
 
         <!--这些enable给到false主要就是为了不生成XXXExample.java在数据实体类中-->
         <!--生成对应表及类名-->
-        <table tableName="user_info"  domainObjectName="UserInfo" enableCountByExample="false"
+        <!--<table tableName="user_info"  domainObjectName="UserInfo" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--<table tableName="user_pswd"  domainObjectName="UserPassword" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <table tableName="item"  domainObjectName="ItemDO" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="user_pswd"  domainObjectName="UserPassword" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <!--<table tableName="item_stock"  domainObjectName="ItemStockDO" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
         <!--<table tableName="promo"  domainObjectName="PromoDO" enableCountByExample="false"-->
                <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
