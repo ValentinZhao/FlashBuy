@@ -1,6 +1,7 @@
 package flashbuy.dao;
 
 import flashbuy.dataobject.ItemDO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -54,4 +55,6 @@ public interface ItemDOMapper {
      * @mbg.generated Sun Jan 19 18:50:51 PST 2020
      */
     int updateByPrimaryKey(ItemDO record);
+
+    int increaseSales(@Param("id")Integer id, @Param("amount")Integer amount);
 }

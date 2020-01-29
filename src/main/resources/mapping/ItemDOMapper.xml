@@ -41,7 +41,7 @@
     -->
     select
     <include refid="Base_Column_List" />
-    from item order by DESC
+    from item order by sales DESC
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
@@ -151,6 +151,12 @@
       description = #{description,jdbcType=VARCHAR},
       img_url = #{imgUrl,jdbcType=VARCHAR},
       sales = #{sales,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="increaseSales" >
+    update item
+    set sales = sales + #{amount}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

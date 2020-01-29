@@ -10,7 +10,14 @@ public enum EmBusinessError implements CommonError {
     USER_NOT_EXIST(20001, "用户不存在"),
 
     LOGIN_FAILURE(20002, "登录手机或密码错误"),
+
+    USER_NOT_LOGIN(20003, "用户还未登陆"),
+
+    // 30000开头表示订单错误
+    STOCK_NOT_ENOUGH(30001, "库存不足"),
     ;
+
+
 
     private int errCode;
 

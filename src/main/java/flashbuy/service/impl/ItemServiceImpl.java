@@ -7,7 +7,9 @@ import flashbuy.dataobject.ItemStockDO;
 import flashbuy.error.BusinessException;
 import flashbuy.error.EmBusinessError;
 import flashbuy.service.ItemService;
+import flashbuy.service.PromoService;
 import flashbuy.service.model.ItemModel;
+import flashbuy.service.model.PromoModel;
 import flashbuy.validator.ValidationResult;
 import flashbuy.validator.ValidatorImpl;
 import org.springframework.beans.BeanUtils;
@@ -30,6 +32,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     public ValidatorImpl validator;
+
+    @Autowired
+    public PromoService promoService;
 
     @Override
     @Transactional
@@ -54,6 +59,25 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
+    public boolean decreaseStock(Integer itemId, Integer amount) throws BusinessException {
+        int affectedRow =  itemStockDOMapper.decreaseStock(itemId,amount);
+        if(affectedRow > 0){
+            //更新库存成功
+            return true;
+        }else{
+            //更新库存失败
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void increaseSales(Integer itemId, Integer amount) throws BusinessException {
+        itemDOMapper.increaseSales(itemId, amount);
+    }
+
+    @Override
     public List<ItemModel> listItem() {
         List<ItemDO> itemDOList = itemDOMapper.listItem();
         List<ItemModel> itemModels = itemDOList.stream().map(itemDO -> {
@@ -61,7 +85,7 @@ public class ItemServiceImpl implements ItemService {
             ItemModel itemModel = this.convertModelFromDataObject(itemDO,itemStockDO);
             return itemModel;
         }).collect(Collectors.toList());
-        return null;
+        return itemModels;
     }
 
     @Override
@@ -76,6 +100,12 @@ public class ItemServiceImpl implements ItemService {
 
         //将dataobject->model
         ItemModel itemModel = convertModelFromDataObject(itemDO,itemStockDO);
+
+        //获取活动商品信息
+        PromoModel promoModel = promoService.getPromoByItemId(itemModel.getId());
+        if(promoModel != null && promoModel.getStatus() != 3){
+            itemModel.setPromoModel(promoModel);
+        }
 
         return itemModel;
     }
