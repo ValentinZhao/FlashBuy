@@ -16,20 +16,20 @@ import java.util.Map;
 @RestController
 public class BaseController {
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public Object exceptionHandler(HttpServletRequest request, Exception ex) {
-        Map<String, Object> responseMap = new HashMap<>();
-
-        if (ex instanceof BusinessException) {
-            responseMap.put("errCode", ((BusinessException) ex).getErrCode());
-            responseMap.put("errMsg", ((BusinessException) ex).getErrMsg());
-        } else {
-            responseMap.put("errCode", EmBusinessError.UNKNOWN_PARAMETER.getErrCode());
-            responseMap.put("errMsg", EmBusinessError.UNKNOWN_PARAMETER.getErrMsg());
-        }
-
-        return CommonReturnType.create(responseMap, "fail");
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    public Object exceptionHandler(HttpServletRequest request, Exception ex) {
+//        Map<String, Object> responseMap = new HashMap<>();
+//
+//        if (ex instanceof BusinessException) {
+//            responseMap.put("errCode", ((BusinessException) ex).getErrCode());
+//            responseMap.put("errMsg", ((BusinessException) ex).getErrMsg());
+//        } else {
+//            responseMap.put("errCode", EmBusinessError.UNKNOWN_PARAMETER.getErrCode());
+//            responseMap.put("errMsg", EmBusinessError.UNKNOWN_PARAMETER.getErrMsg());
+//        }
+//
+//        return CommonReturnType.create(responseMap, "fail");
+//    }
 }
