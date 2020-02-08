@@ -9,7 +9,6 @@
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/service/UserService.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dao/PromoDOMapper.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dao/ItemDOMapper.java
-/Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/config/RestConfig.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dataobject/UserPassword.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/controller/BaseController.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dataobject/ItemStockDO.java
@@ -23,6 +22,7 @@
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/service/impl/ItemServiceImpl.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/App.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/controller/ItemController.java
+/Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/config/RedisConfig.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/service/impl/UserServiceImpl.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/controller/UserController.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dao/OrderInfoDOMapper.java
@@ -31,6 +31,7 @@
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dataobject/ItemDO.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dao/SequenceInfoDOMapper.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/error/EmBusinessError.java
+/Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/config/WebServerConfiguration.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dataobject/OrderInfoDO.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/service/model/OrderModel.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/validator/ValidationResult.java

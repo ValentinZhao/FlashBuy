@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: flashbuy.AppTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.02 s - in flashbuy.AppTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 s - in flashbuy.AppTest

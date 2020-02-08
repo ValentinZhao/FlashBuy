@@ -11,6 +11,7 @@ import flashbuy.service.model.UserModel;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Encoder;
@@ -23,6 +24,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static flashbuy.util.Utils.convertModel2VO;
 
@@ -39,6 +42,9 @@ public class UserController extends BaseController{
 
     @Autowired
     HttpServletRequest servletRequest;
+
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @GetMapping("/")
     public String home() {
@@ -113,10 +119,19 @@ public class UserController extends BaseController{
                                   @RequestParam(name="psw") String psw) throws BusinessException, NoSuchAlgorithmException {
         UserModel model = service.validateLogin(phone, this.encodeByMd5(psw));
 
-        servletRequest.getSession().setAttribute("IS_LOGIN", true);
-        servletRequest.getSession().setAttribute("LOGIN_USER", model);
+//        servletRequest.getSession().setAttribute("IS_LOGIN", true);
+//        servletRequest.getSession().setAttribute("LOGIN_USER", model);
 
-        return CommonReturnType.create(null);
+        // 生成token
+        String uuid = UUID.randomUUID().toString();
+        uuid = uuid.replaceAll("-", "");
+
+        // 存入redis
+        redisTemplate.opsForValue().set(uuid, model);
+        redisTemplate.expire(uuid, 1, TimeUnit.HOURS);
+
+        // 下发token
+        return CommonReturnType.create(uuid);
     }
 
     private String encodeByMd5(String psw) throws NoSuchAlgorithmException {
