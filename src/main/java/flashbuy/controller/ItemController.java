@@ -10,10 +10,14 @@ import flashbuy.service.model.PromoModel;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,7 +26,12 @@ import java.util.stream.Collectors;
 public class ItemController extends BaseController {
 
     @Autowired
-    ItemService service;
+    @Qualifier("itemServiceImpl")
+    private ItemService service;
+
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate template;
 
     @PostMapping(path = "/create", consumes = {"application/x-www-form-urlencoded"})
     @ResponseBody
@@ -49,7 +58,16 @@ public class ItemController extends BaseController {
     @GetMapping("/get")
     @ResponseBody
     public CommonReturnType getItem(@RequestParam(name="id") Integer id) {
-        ItemModel model = service.getItemById(id);
+        // 先用redis查一次
+        ItemModel model = (ItemModel) template.opsForValue().get("item_"+id);
+
+        // 如果缓存没有就去数据库拿
+        if (model == null) {
+            model = service.getItemById(id);
+            template.opsForValue().set("item_"+id, model);
+            template.expire("item_"+id, 10, TimeUnit.MINUTES);
+        }
+
 
         ItemVO itemVO = convertVOFromModel(model);
 
