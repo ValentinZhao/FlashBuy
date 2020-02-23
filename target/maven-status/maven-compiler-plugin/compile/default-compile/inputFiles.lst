@@ -13,6 +13,7 @@
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/controller/BaseController.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dataobject/ItemStockDO.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/service/impl/OrderServiceImpl.java
+/Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/serializer/JodaDateTimeJsonDeserializer.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/validator/ValidatorImpl.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dataobject/PromoDO.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/controller/OrderController.java
@@ -34,6 +35,7 @@
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/config/WebServerConfiguration.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dataobject/OrderInfoDO.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/service/model/OrderModel.java
+/Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/serializer/JodaDateTimeJsonSerializer.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/validator/ValidationResult.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/dao/ItemStockDOMapper.java
 /Users/codemao/zzl/java_repo/FlashBuy/src/main/java/flashbuy/service/model/UserModel.java
