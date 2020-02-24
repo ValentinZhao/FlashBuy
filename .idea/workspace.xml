@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="057d480b-4ed8-4b24-97d7-301dddf42f94" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/flashbuy/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flashbuy/config/RedisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/flashbuy/config/RedisConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/flashbuy/config/RedisConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-flashbuy.AppTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-flashbuy.AppTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/flashbuy.AppTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/flashbuy.AppTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/valtzhao-flashbuy-0.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/valtzhao-flashbuy-0.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/valtzhao-flashbuy-0.0.1.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/valtzhao-flashbuy-0.0.1.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flashbuy/controller/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flashbuy/controller/ItemController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,7 +20,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/service/impl/OrderServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1906">
-              <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+              <caret line="108" selection-start-line="108" selection-end-line="108" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -37,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/config/WebServerConfiguration.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="394">
-              <caret line="28" column="1" lean-forward="true" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+              <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -81,11 +76,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/controller/ItemController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-934">
-              <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+            <state relative-caret-position="529">
+              <caret line="80" column="63" selection-start-line="80" selection-start-column="63" selection-end-line="80" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,34 +89,26 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/serializer/JodaDateTimeJsonDeserializer.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/service/impl/CacheServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="21" column="1" lean-forward="true" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+            <state relative-caret-position="303">
+              <caret line="16" column="24" lean-forward="true" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#811#812#0" expanded="true" />
+                <element signature="e#831#832#0" expanded="true" />
+                <element signature="e#914#915#0" expanded="true" />
+                <element signature="e#938#939#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/serializer/JodaDateTimeJsonSerializer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/config/RedisConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="43" column="66" lean-forward="true" selection-start-line="43" selection-start-column="66" selection-end-line="43" selection-end-column="66" />
+            <state relative-caret-position="223">
+              <caret line="28" column="65" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -174,8 +161,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/main/java/flashbuy/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/controller/FlashBuyController.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/dao/UserPasswordMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/controller/viewobject/UserVO.java" />
@@ -214,17 +199,19 @@
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/controller/GlobalExceptionHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/config/WebServerConfiguration.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/service/model/UserModel.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/controller/OrderController.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/service/impl/ItemServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/service/model/ItemModel.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/service/model/PromoModel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/flashbuy/controller/ItemController.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/serializer/JodaDateTimeJsonDeserializer.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/serializer/JodaDateTimeJsonSerializer.java" />
         <option value="$PROJECT_DIR$/src/main/java/flashbuy/config/RedisConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/flashbuy/service/CacheService.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/flashbuy/service/impl/CacheServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/flashbuy/controller/ItemController.java" />
       </list>
     </option>
   </component>
@@ -371,15 +358,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="flashbuy" type="462c0819:PsiDirectoryNode" />
-              <item name="serializer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="flashbuy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FlashBuy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="flashbuy" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -518,7 +496,7 @@
     <frame x="143" y="71" width="1636" height="917" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21769135" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21769135" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Project Explorer" order="2" />
       <window_info id="DB Browser" order="3" />
@@ -560,20 +538,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/dao/UserInfoMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/dataobject/UserInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="28" column="19" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/validator/ValidatorImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -960,7 +924,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/config/WebServerConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="394">
-          <caret line="28" column="1" lean-forward="true" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+          <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -994,17 +958,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="17" column="36" lean-forward="true" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/service/impl/OrderServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1906">
-          <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+          <caret line="108" selection-start-line="108" selection-end-line="108" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1021,10 +978,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/controller/ItemController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/config/RedisConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-934">
-          <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+        <state relative-caret-position="223">
+          <caret line="28" column="65" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1051,10 +1008,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/config/RedisConfig.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/service/CacheService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="43" column="66" lean-forward="true" selection-start-line="43" selection-start-column="66" selection-end-line="43" selection-end-column="66" />
+        <state relative-caret-position="133">
+          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="74" column="17" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/service/impl/CacheServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="16" column="24" lean-forward="true" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#811#812#0" expanded="true" />
+            <element signature="e#831#832#0" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+            <element signature="e#938#939#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/flashbuy/controller/ItemController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="80" column="63" selection-start-line="80" selection-start-column="63" selection-end-line="80" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

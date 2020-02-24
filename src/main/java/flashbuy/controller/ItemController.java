@@ -4,6 +4,7 @@ import flashbuy.controller.viewobject.ItemVO;
 import flashbuy.dataobject.ItemDO;
 import flashbuy.error.BusinessException;
 import flashbuy.response.CommonReturnType;
+import flashbuy.service.CacheService;
 import flashbuy.service.ItemService;
 import flashbuy.service.model.ItemModel;
 import flashbuy.service.model.PromoModel;
@@ -33,6 +34,9 @@ public class ItemController extends BaseController {
     @Qualifier("redisTemplate")
     private RedisTemplate template;
 
+    @Autowired
+    private CacheService cacheService;
+
     @PostMapping(path = "/create", consumes = {"application/x-www-form-urlencoded"})
     @ResponseBody
     public CommonReturnType createItem(@RequestParam(name = "title")String title,
@@ -58,18 +62,27 @@ public class ItemController extends BaseController {
     @GetMapping("/get")
     @ResponseBody
     public CommonReturnType getItem(@RequestParam(name="id") Integer id) {
-        // 先用redis查一次
-        ItemModel model = (ItemModel) template.opsForValue().get("item_"+id);
+        ItemModel itemModel = null;
 
-        // 如果缓存没有就去数据库拿
-        if (model == null) {
-            model = service.getItemById(id);
-            template.opsForValue().set("item_"+id, model);
-            template.expire("item_"+id, 10, TimeUnit.MINUTES);
+        itemModel = (ItemModel) cacheService.getFromCommonCache("item_"+id);
+
+        if (itemModel == null) {
+            // 先用redis查一次
+            itemModel = (ItemModel) template.opsForValue().get("item_"+id);
+
+            // 如果缓存没有就去数据库拿
+            if (itemModel == null) {
+                itemModel = service.getItemById(id);
+                template.opsForValue().set("item_"+id, itemModel);
+                template.expire("item_"+id, 10, TimeUnit.MINUTES);
+            }
+
+            // 填充本地缓存
+            cacheService.setCommonCache("item_"+id, itemModel);
         }
 
 
-        ItemVO itemVO = convertVOFromModel(model);
+        ItemVO itemVO = convertVOFromModel(itemModel);
 
         return CommonReturnType.create(itemVO);
     }
