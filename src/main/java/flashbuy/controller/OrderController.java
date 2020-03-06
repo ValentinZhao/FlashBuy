@@ -3,7 +3,9 @@ package flashbuy.controller;
 import com.alibaba.druid.util.StringUtils;
 import flashbuy.error.BusinessException;
 import flashbuy.error.EmBusinessError;
+import flashbuy.mq.MqProducer;
 import flashbuy.response.CommonReturnType;
+import flashbuy.service.ItemService;
 import flashbuy.service.OrderService;
 import flashbuy.service.model.OrderModel;
 import flashbuy.service.model.UserModel;
@@ -25,6 +27,12 @@ public class OrderController extends BaseController {
 
     @Autowired
     RedisTemplate redisTemplate;
+
+    @Autowired
+    private MqProducer mqProducer;
+
+    @Autowired
+    private ItemService itemService;
 
     @PostMapping(path="/createorder", consumes = {"application/x-www-form-urlencoded"})
     public CommonReturnType createOrder(@RequestParam(name="itemId") Integer itemId,
@@ -49,8 +57,17 @@ public class OrderController extends BaseController {
 
 //        UserModel userModel = (UserModel)httpServletRequest.getSession().getAttribute("LOGIN_USER");
 
-        orderModel = orderService.createOrder(userModel.getId(), itemId, promoId, amount);
+//        orderModel = orderService.createOrder(userModel.getId(), itemId, promoId, amount);
+        // 检查是否已经售罄
+        boolean res = redisTemplate.hasKey("promo_item_stock_invalid_"+itemId);
+        if (!res) throw new BusinessException(EmBusinessError.UNKNOWN_PARAMETER, "已经售罄！");
 
+        // 初始化库存流水状态
+        String stockLog = itemService.initStockLog(itemId, amount);
+
+        if (!mqProducer.transactionAsyncReduceStock(userModel.getId(), itemId, promoId, amount, stockLog)) {
+            throw new BusinessException(EmBusinessError.UNKNOWN_PARAMETER, "下单失败");
+        }
         return CommonReturnType.create(null);
     }
 }

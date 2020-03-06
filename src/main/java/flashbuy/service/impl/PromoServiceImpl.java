@@ -2,11 +2,15 @@ package flashbuy.service.impl;
 
 import flashbuy.dao.PromoDOMapper;
 import flashbuy.dataobject.PromoDO;
+import flashbuy.service.ItemService;
 import flashbuy.service.PromoService;
+import flashbuy.service.model.ItemModel;
 import flashbuy.service.model.PromoModel;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,6 +20,13 @@ public class PromoServiceImpl implements PromoService {
 
     @Autowired
     PromoDOMapper promoDOMapper;
+
+    @Autowired
+    ItemService itemService;
+
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate template;
 
     @Override
     public PromoModel getPromoByItemId(Integer itemId) {
@@ -35,6 +46,22 @@ public class PromoServiceImpl implements PromoService {
             promoModel.setStatus(2);
         }
         return promoModel;
+    }
+
+    /**
+     * 在发布活动的时候，就把数据库库存同步到缓存里，带上相应的活动id
+     * @param promoId 活动id
+     */
+    @Override
+    public void publishPromo(Integer promoId) {
+        PromoDO promoDO = promoDOMapper.selectByPrimaryKey(promoId);
+        if(promoDO.getItemId() == null || promoDO.getItemId().intValue() == 0){
+            return;
+        }
+        ItemModel itemModel = itemService.getItemById(promoDO.getItemId());
+
+        //将库存同步到redis内
+        template.opsForValue().set("promo_item_stock_"+itemModel.getId(), itemModel.getStock());
     }
 
     private PromoModel convertFromDataObject(PromoDO promoDO) {

@@ -6,6 +6,7 @@ import flashbuy.error.BusinessException;
 import flashbuy.response.CommonReturnType;
 import flashbuy.service.CacheService;
 import flashbuy.service.ItemService;
+import flashbuy.service.PromoService;
 import flashbuy.service.model.ItemModel;
 import flashbuy.service.model.PromoModel;
 import org.joda.time.format.DateTimeFormat;
@@ -36,6 +37,9 @@ public class ItemController extends BaseController {
 
     @Autowired
     private CacheService cacheService;
+
+    @Autowired
+    private PromoService promoService;
 
     @PostMapping(path = "/create", consumes = {"application/x-www-form-urlencoded"})
     @ResponseBody
@@ -98,6 +102,14 @@ public class ItemController extends BaseController {
             return itemVO;
         }).collect(Collectors.toList());
         return CommonReturnType.create(itemVOList);
+    }
+
+    // 活动发布
+    @RequestMapping(value = "/promopublish",method = {RequestMethod.GET})
+    @ResponseBody
+    public CommonReturnType promoPublish(@RequestParam(name = "id")Integer id) {
+        promoService.publishPromo(id);
+        return CommonReturnType.create(null);
     }
 
     private ItemVO convertVOFromModel(ItemModel itemModel){

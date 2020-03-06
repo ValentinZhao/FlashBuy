@@ -38,7 +38,7 @@
         <!--<table tableName="item"  domainObjectName="ItemDO" enableCountByExample="false"-->
                <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-        <table tableName="promo"  domainObjectName="PromoDO" enableCountByExample="false"
+        <table tableName="stock_log"  domainObjectName="StockLogDO" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <!--<table tableName="item_stock"  domainObjectName="ItemStockDO" enableCountByExample="false"-->

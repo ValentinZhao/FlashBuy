@@ -2,10 +2,13 @@ package flashbuy.service.impl;
 
 import flashbuy.dao.ItemDOMapper;
 import flashbuy.dao.ItemStockDOMapper;
+import flashbuy.dao.StockLogDOMapper;
 import flashbuy.dataobject.ItemDO;
 import flashbuy.dataobject.ItemStockDO;
+import flashbuy.dataobject.StockLogDO;
 import flashbuy.error.BusinessException;
 import flashbuy.error.EmBusinessError;
+import flashbuy.mq.MqProducer;
 import flashbuy.service.ItemService;
 import flashbuy.service.PromoService;
 import flashbuy.service.model.ItemModel;
@@ -14,12 +17,15 @@ import flashbuy.validator.ValidationResult;
 import flashbuy.validator.ValidatorImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +42,16 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     public PromoService promoService;
+
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate template;
+
+    @Autowired
+    private MqProducer producer;
+
+    @Autowired
+    private StockLogDOMapper stockLogDOMapper;
 
     @Override
     @Transactional
@@ -62,20 +78,59 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public boolean decreaseStock(Integer itemId, Integer amount) throws BusinessException {
-        int affectedRow =  itemStockDOMapper.decreaseStock(itemId,amount);
-        if(affectedRow > 0){
+        // 数据库行优化部分，扣库存都扔到缓存中完成
+//        int affectedRow =  itemStockDOMapper.decreaseStock(itemId,amount);
+
+        // result就是扣完的结果
+        long result = template.opsForValue().increment("promo_item_stock_"+itemId,amount.intValue() * -1);
+
+        if(result > 0){
+            return true;
+        }else if (result == 0) {
+            //打上库存已售罄的标识
+            template.opsForValue().set("promo_item_stock_invalid_"+itemId,"true");
+
             //更新库存成功
             return true;
-        }else{
+        } else {
             //更新库存失败
+            template.opsForValue().increment("promo_item_stock_"+itemId,amount.intValue());
             return false;
         }
+    }
+
+    @Override
+    public boolean asyncDecreaseStock(Integer itemId, Integer amount) {
+        // 消息队列异步更新库存
+        boolean mqResult = producer.asyncReduceStock(itemId, amount);
+        return mqResult;
+    }
+
+    @Override
+    public boolean increaseStock(Integer itemId, Integer amount) {
+        template.opsForValue().increment("promo_item_stock_"+itemId,amount.intValue());
+        return true;
     }
 
     @Override
     @Transactional
     public void increaseSales(Integer itemId, Integer amount) throws BusinessException {
         itemDOMapper.increaseSales(itemId, amount);
+    }
+
+    @Override
+    @Transactional
+    public String initStockLog(Integer itemId, Integer amount) {
+        StockLogDO stockLogDO = new StockLogDO();
+
+        stockLogDO.setAmount(amount);
+        stockLogDO.setItemId(itemId);
+        stockLogDO.setStockLogId(UUID.randomUUID().toString().replace("-",""));
+        stockLogDO.setStatus(1);
+
+        stockLogDOMapper.insertSelective(stockLogDO);
+
+        return stockLogDO.getStockLogId();
     }
 
     @Override
@@ -108,6 +163,17 @@ public class ItemServiceImpl implements ItemService {
             itemModel.setPromoModel(promoModel);
         }
 
+        return itemModel;
+    }
+
+    @Override
+    public ItemModel getItemByIdInCache(Integer id) {
+        ItemModel itemModel = (ItemModel) template.opsForValue().get("item_validate_"+id);
+        if(itemModel == null){
+            itemModel = this.getItemById(id);
+            template.opsForValue().set("item_validate_"+id,itemModel);
+            template.expire("item_validate_"+id,10, TimeUnit.MINUTES);
+        }
         return itemModel;
     }
 

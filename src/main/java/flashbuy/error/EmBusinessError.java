@@ -15,6 +15,7 @@ public enum EmBusinessError implements CommonError {
 
     // 30000开头表示订单错误
     STOCK_NOT_ENOUGH(30001, "库存不足"),
+    MQ_ASYNC_EXCEPTION(30002, "消息队列异步任务失败"),
     ;
 
 

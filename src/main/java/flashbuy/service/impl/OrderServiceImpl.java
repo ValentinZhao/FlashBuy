@@ -2,8 +2,10 @@ package flashbuy.service.impl;
 
 import flashbuy.dao.OrderInfoDOMapper;
 import flashbuy.dao.SequenceInfoDOMapper;
+import flashbuy.dao.StockLogDOMapper;
 import flashbuy.dataobject.OrderInfoDO;
 import flashbuy.dataobject.SequenceInfoDO;
+import flashbuy.dataobject.StockLogDO;
 import flashbuy.error.BusinessException;
 import flashbuy.error.EmBusinessError;
 import flashbuy.service.ItemService;
@@ -36,15 +38,21 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     SequenceInfoDOMapper sequenceInfoDOMapper;
 
+    @Autowired
+    StockLogDOMapper stockLogDOMapper;
+
     @Override
-    public OrderModel createOrder(Integer userId, Integer itemId, Integer promoId, Integer amount) throws BusinessException {
+    public OrderModel createOrder(Integer userId, Integer itemId, Integer promoId, Integer amount, String stockLogId) throws BusinessException {
         //1.校验下单状态,下单的商品是否存在，用户是否合法，购买数量是否正确
-        ItemModel itemModel = itemService.getItemById(itemId);
+
+//        ItemModel itemModel = itemService.getItemById(itemId);
+        ItemModel itemModel = itemService.getItemByIdInCache(itemId); // 使用缓存优化过的ge
+
         if(itemModel == null){
             throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"商品信息不存在");
         }
 
-        UserModel userModel = userService.getUserById(userId);
+        UserModel userModel = userService.getUserByIdInCache(userId);
         if(userModel == null){
             throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"用户信息不存在");
         }
@@ -92,6 +100,32 @@ public class OrderServiceImpl implements OrderService {
 
         //加上商品的销量
         itemService.increaseSales(itemId, amount);
+
+        // 取出库存流水操作，设置为成功
+        StockLogDO stockLogDO = stockLogDOMapper.selectByPrimaryKey(stockLogId);
+        if(stockLogDO == null){
+            throw new BusinessException(EmBusinessError.UNKNOWN_PARAMETER);
+        }
+        stockLogDO.setStatus(2);
+        stockLogDOMapper.updateByPrimaryKeySelective(stockLogDO);
+
+//        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+//
+//            /**
+//             * 这个方法会在最近的一个@Transactional注释完全执行后,再来执行
+//             * 这样就是说我们可以在这个位置来进行最后的同步数据库的操作,其实就是一个回调
+//             * 当然,这个事务要全部成功,才会执行这个
+//             */
+//            @Override
+//            public void afterCommit() {
+//                // 异步刷新库存
+//                boolean mqResult = itemService.asyncDecreaseStock(itemId, amount);
+////                if (!mqResult) {
+////                    itemService.increaseStock(itemId, amount);
+////                    throw new BusinessException(EmBusinessError.MQ_ASYNC_EXCEPTION);
+////                }
+//            }
+//        });
 
         //4.返回前端
 

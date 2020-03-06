@@ -13,8 +13,12 @@ import flashbuy.validator.ValidationResult;
 import flashbuy.validator.ValidatorImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,6 +31,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ValidatorImpl validator;
+
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate template;
 
     /**
      * 这里面的话，需要注意由于我们要从密码表里面取密码，结合起来信息set给UserModel才可以进行
@@ -73,6 +81,17 @@ public class UserServiceImpl implements UserService {
         UserPassword psw = convertUM2Psw(userModel);
 
         userPasswordMapper.insertSelective(psw);
+    }
+
+    @Override
+    public UserModel getUserByIdInCache(Integer id) {
+        UserModel userModel = (UserModel) template.opsForValue().get("user_validate_"+id);
+        if(userModel == null){
+            userModel = this.getUserById(id);
+            template.opsForValue().set("user_validate_"+id,userModel);
+            template.expire("user_validate_"+id,10, TimeUnit.MINUTES);
+        }
+        return userModel;
     }
 
     @Override

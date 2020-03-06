@@ -8,5 +8,8 @@ public interface UserService {
 
     public void register(UserModel userModel) throws BusinessException;
 
+    //通过缓存获取用户对象
+    public UserModel getUserByIdInCache(Integer id);
+
     public UserModel validateLogin(String phone, String psw) throws BusinessException;
 }
