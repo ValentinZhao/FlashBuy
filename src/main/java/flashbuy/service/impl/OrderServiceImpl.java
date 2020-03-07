@@ -52,23 +52,24 @@ public class OrderServiceImpl implements OrderService {
             throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"商品信息不存在");
         }
 
-        UserModel userModel = userService.getUserByIdInCache(userId);
-        if(userModel == null){
-            throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"用户信息不存在");
-        }
+//        UserModel userModel = userService.getUserByIdInCache(userId);
+//        if(userModel == null){
+//            throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"用户信息不存在");
+//        }
         if(amount <= 0 || amount > 99){
             throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"数量信息不正确");
         }
 
-        if (promoId != null) {
-            //（1）校验对应活动是否存在这个适用商品
-            //（2）校验活动是否正在进行中
-            if (!promoId.equals(itemModel.getPromoModel().getId())) {
-                throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"活动信息不正确");
-            } else if (itemModel.getPromoModel().getStatus() != 2) {
-                throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"活动未开始");
-            }
-        }
+        // 由于使用秒杀令牌，登录态和活动状态都提前验证过，所以从下单逻辑中拿掉
+//        if (promoId != null) {
+//            //（1）校验对应活动是否存在这个适用商品
+//            //（2）校验活动是否正在进行中
+//            if (!promoId.equals(itemModel.getPromoModel().getId())) {
+//                throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"活动信息不正确");
+//            } else if (itemModel.getPromoModel().getStatus() != 2) {
+//                throw new BusinessException(EmBusinessError.INVALID_PARAMETER,"活动未开始");
+//            }
+//        }
 
 
         //2.落单减库存

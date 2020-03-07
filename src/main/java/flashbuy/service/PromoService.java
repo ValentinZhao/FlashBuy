@@ -9,4 +9,7 @@ public interface PromoService {
 
     //活动发布
     public void publishPromo(Integer promoId);
+
+    // 生成令牌
+    public String getFlashbuyToken(Integer promoId,Integer itemId,Integer userId);
 }
